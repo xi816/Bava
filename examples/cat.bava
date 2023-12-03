@@ -1,0 +1,4 @@
+let [var 0]
+let [var input[]]
+
+println[val[var]]

@@ -1,7 +1,9 @@
 import json
 
 def lex(src):
-  src = list(src + "\0")
+  src = list(src\
+    .replace("]", " ] ")
+    .replace("[", " [ ") + "\0")
   pos = 0
 
   buf = ""
@@ -21,7 +23,6 @@ def lex(src):
       while (src[pos] in DIGITS + "."):
         buf += src[pos]
         pos += 1
-      print(buf)
       if (buf.count(".") == 0):
         tokens["body"].append({"kw": False, "actual": "int", "value": int(buf)})
       elif (buf.count(".") == 1):
@@ -35,6 +36,8 @@ def lex(src):
         pos += 1
       if (buf in ["println", "add", "sub", "mul", "div"]):
         tokens["body"].append({"kw": True, "value": buf, "ac": -1})
+      elif (buf in ["input"]):
+        tokens["body"].append({"kw": True, "value": buf, "ac": 0})
       elif (buf in ["toInt", "toFloat", "val"]):
         tokens["body"].append({"kw": True, "value": buf, "ac": 1})
       elif (buf in ["let"]):
@@ -46,6 +49,16 @@ def lex(src):
       assert False, "LEXER => ERROR => You can't use spaces in indentation"
     elif (src[pos] in WHITESPACES):
       pos += 1
+    elif (src[pos] == "\""):
+      pos += 1
+      while (src[pos] != "\""):
+        if (src[pos] == "\n"):
+          assert False, "LEXER => ERROR => Unterminated string literal"
+        buf += src[pos]
+        pos += 1
+      tokens["body"].append({"kw": False, "actual": "string", "value": buf})
+      buf = ""
+      pos += 1
     else:
       while (src[pos] not in (DIGITS + VARLETTERS + WHITESPACES + "\0")):
         buf += src[pos]
@@ -54,9 +67,9 @@ def lex(src):
         tokens["body"].append({"kw": False, "actual": "openbr", "value": None})
       elif (buf == "]"):
         tokens["body"].append({"kw": False, "actual": "closebr", "value": None})
-      elif (all([i == "]" for i in buf])):
-        for i in range(len(buf)):
-          tokens["body"].append({"kw": False, "actual": "closebr", "value": None})
+      # elif (all([i == "]" for i in buf])):
+      #   for i in range(len(buf)):
+      #     tokens["body"].append({"kw": False, "actual": "closebr", "value": None})
       buf = ""
 
   tokens["body"].append({"EOF": True})

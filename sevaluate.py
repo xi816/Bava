@@ -46,7 +46,7 @@ def Div(ac, args):
   return False
 
 def ToInt(ac, args):
-  assert (len(args) == 1), f"EVALUATOR => ERROR => Function `toInt` expects 1 argument, but got {len(args)}"
+  assert (len(args) == ac), f"EVALUATOR => ERROR => Function `toInt` expects 1 argument, but got {len(args)}"
   assert (type(args[0]) is not int), "EVALUATOR => ERROR => Trying to convert type INT to type INT"
   assert (type(args[0]) in [float, str]), f"EVALUATOR => ERROR => Trying to convert type {type(args[0])} to type INT"
   return int(args[0])
@@ -63,16 +63,22 @@ def Let(ac, args):
 
 def Val(ac, args):
   assert (type(args[0]) is IdentLit), "EVALUATOR => ERROR => Trying to get a value from a builtin keyword"
-  assert (len(args) == 1), f"EVALUATOR => ERROR => Function `val` expects 1 argument, but got {len(args)}"
+  assert (len(args) == ac), f"EVALUATOR => ERROR => Function `val` expects 1 argument, but got {len(args)}"
   return VARS[args[0].val]
 
 def Int(value):
   return int(value)
 def Float(value):
   return float(value)
+def String(value):
+  return str(value)
 
 def Ident(name):
   return IdentLit(name)
+
+def Input(ac, args):
+  inp = input()
+  return inp
 
 def evaluateBava(code, needDebug):
   exec(code)

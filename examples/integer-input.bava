@@ -1,0 +1,5 @@
+let [x toInt[input[]]]
+
+println[
+  "You typed: " val[x]
+]

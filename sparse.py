@@ -31,6 +31,8 @@ def parse(toks):
         parsed += f"Let(ac=2, args=["
       elif (body[pos].get("value") == "val"):
         parsed += f"Val(ac=1, args=["
+      elif (body[pos].get("value") == "input"):
+        parsed += f"Input(ac=0, args=["
 
       pos += 2
       opened += 1
@@ -65,8 +67,15 @@ def parse(toks):
         parsed += f"Float(value={body[pos]['value']})"
         pos += 1
         opargs[-1] += 1
+      elif (body[pos]["actual"] == "string"):
+        if (len(opargs) > 0):
+          if (opargs[-1] > 0):
+            parsed += ", "
+        parsed += f"String(value=\"{body[pos]['value']}\")"
+        pos += 1
+        opargs[-1] += 1
       else:
-        assert False, f"PARSER => ERROR => Unexpected `{body[pos]}`"
+        assert False, f"PARSER => ERROR => Unexpected `{body[pos]}` at position {pos}"
       if (len(opargs) == 0):
         parsed += "\n"
   return parsed
