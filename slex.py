@@ -67,9 +67,6 @@ def lex(src):
         tokens["body"].append({"kw": False, "actual": "openbr", "value": None})
       elif (buf == "]"):
         tokens["body"].append({"kw": False, "actual": "closebr", "value": None})
-      # elif (all([i == "]" for i in buf])):
-      #   for i in range(len(buf)):
-      #     tokens["body"].append({"kw": False, "actual": "closebr", "value": None})
       buf = ""
 
   tokens["body"].append({"EOF": True})

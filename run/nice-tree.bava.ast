@@ -1,0 +1,4 @@
+Let(ac=2, args=[Ident(name="x"), Int(value=34)])
+Let(ac=2, args=[Ident(name="y"), Int(value=35)])
+PrintLn(ac=-1, args=[Add(ac=-1, args=[Val(ac=1, args=[Ident(name="x")]), Val(ac=1, args=[Ident(name="y")])])])
+PrintLn(ac=-1, args=[Add(ac=-1, args=[Int(value=1), Mul(ac=-1, args=[Val(ac=1, args=[Ident(name="x")]), Int(value=2)])])])

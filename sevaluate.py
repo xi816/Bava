@@ -2,6 +2,7 @@ from copy import deepcopy as dcopy
 from dataclasses import dataclass
 
 VARS = {}
+CLARGS = []
 
 @dataclass
 class IdentLit:
@@ -80,5 +81,7 @@ def Input(ac, args):
   inp = input()
   return inp
 
-def evaluateBava(code, needDebug):
+def evaluateBava(code, clargs):
+  global CLARGS
+  CLARGS = clargs
   exec(code)

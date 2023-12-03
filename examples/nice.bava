@@ -1,0 +1,16 @@
+let [x 34]
+let [y 35]
+
+println[
+  add[
+    val[x] val[y]
+  ]
+]
+
+println[
+  add[
+    1 mul[
+      val[x] 2
+    ]
+  ]
+]
