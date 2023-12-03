@@ -1,6 +1,8 @@
 from copy import deepcopy as dcopy
 from dataclasses import dataclass
 
+# assert (len(args) == ac), f"EVALUATOR => ERROR => Function `function` expects 1 argument, but got {len(args)}"
+
 VARS = {}
 CLARGS = []
 
@@ -8,9 +10,22 @@ CLARGS = []
 class IdentLit:
   val: str
 
+class ArrayLit:
+  def __init__(self, buf):
+    self.cont = buf
+
+  def __repr__(self):
+    s = "{"
+    for i, j in enumerate(self.cont):
+      if (i != len(self.cont)-1):
+        s += str(j) + " "
+      else:
+        s += str(j)
+    return s + "}"
+
 def PrintLn(ac, args):
-  for i in args:
-    print(i, end = "")
+  for el in args:
+    print(el, end = "")
   print()
   return 0
 
@@ -73,6 +88,24 @@ def Float(value):
   return float(value)
 def String(value):
   return str(value)
+def Array(ac, args):
+  return ArrayLit(args)
+
+def Elem(ac, args):
+  assert (len(args) >= 2), f"EVALUATOR => ERROR => Function `elem` expects at least 2 arguments, but got {len(args)}"
+  assert (type(args[0]) is IdentLit), f"EVALUATOR => ERROR => Function `elem` expects type IDENT as a first argument"
+  s = "VARS[args[0].val].cont"
+  for i in args[1:]:
+    s += f"[{i}]"
+  return eval(s)
+
+def SetElem(ac, args):
+  assert (len(args) >= 3), f"EVALUATOR => ERROR => Function `set` expects at least 2 arguments, but got {len(args)}"
+  assert (type(args[0]) is IdentLit), f"EVALUATOR => ERROR => Function `set` expects type IDENT as a first argument"
+  s = f"VARS[args[0].val].cont"
+  for i in args[2:]:
+    s += f"[{i}]"
+  return exec(s + f" = {args[1]}")
 
 def Ident(name):
   return IdentLit(name)

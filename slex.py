@@ -1,9 +1,7 @@
 import json
 
 def lex(src):
-  src = list(src\
-    .replace("]", " ] ")
-    .replace("[", " [ ") + "\0")
+  src = list(src + "\0")
   pos = 0
 
   buf = ""
@@ -16,6 +14,11 @@ def lex(src):
   WHITESPACES = " \n\b\v"
 
   while (src[pos] != "\0"):
+    # print(src[pos], pos)
+    if (src[pos] == "~"):
+      while (src[pos] != "\n"):
+        pos += 1
+      pos += 1
     if (src[pos] in DIGITS + "-"):
       if (src[pos] == "-"):
         buf += src[pos]
@@ -34,7 +37,7 @@ def lex(src):
       while (src[pos] in (VARLETTERS + DIGITS)):
         buf += src[pos]
         pos += 1
-      if (buf in ["println", "add", "sub", "mul", "div"]):
+      if (buf in ["println", "add", "sub", "mul", "div", "array", "elem", "set"]):
         tokens["body"].append({"kw": True, "value": buf, "ac": -1})
       elif (buf in ["input"]):
         tokens["body"].append({"kw": True, "value": buf, "ac": 0})
@@ -67,6 +70,19 @@ def lex(src):
         tokens["body"].append({"kw": False, "actual": "openbr", "value": None})
       elif (buf == "]"):
         tokens["body"].append({"kw": False, "actual": "closebr", "value": None})
+      # elif (all([i == "]" for i in buf])):
+      #   for i in range(len(buf)):
+      #     tokens["body"].append({"kw": False, "actual": "closebr", "value": None})
+      elif (buf[0] == "[") and (len(buf) > 1):
+        tokens["body"].append({"kw": False, "actual": "openbr", "value": None})
+        pos -= len(buf) - 1
+      elif (buf[0] == "]") and (len(buf) > 1):
+        tokens["body"].append({"kw": False, "actual": "closebr", "value": None})
+        pos -= len(buf) - 1
+      # elif (buf[0] == "[") and (all([i == "]" for i in buf[1:]])):
+      #   tokens["body"].append({"kw": False, "actual": "openbr", "value": None})
+      #   for i in range(len(buf)-1):
+      #     tokens["body"].append({"kw": False, "actual": "closebr", "value": None})
       buf = ""
 
   tokens["body"].append({"EOF": True})

@@ -13,26 +13,34 @@ def parse(toks):
       if (len(opargs) > 0):
         if (opargs[-1] > 0):
           parsed += ", "
-      if (body[pos].get("value") == "println"):
-        parsed += f"PrintLn(ac=-1, args=["
-      elif (body[pos].get("value") == "add"):
-        parsed += f"Add(ac=-1, args=["
-      elif (body[pos].get("value") == "sub"):
-        parsed += f"Sub(ac=-1, args=["
-      elif (body[pos].get("value") == "mul"):
-        parsed += f"Mul(ac=-1, args=["
-      elif (body[pos].get("value") == "div"):
-        parsed += f"Div(ac=-1, args=["
-      elif (body[pos].get("value") == "toInt"):
-        parsed += f"ToInt(ac=1, args=["
-      elif (body[pos].get("value") == "toFloat"):
-        parsed += f"ToFloat(ac=1, args=["
-      elif (body[pos].get("value") == "let"):
-        parsed += f"Let(ac=2, args=["
-      elif (body[pos].get("value") == "val"):
-        parsed += f"Val(ac=1, args=["
-      elif (body[pos].get("value") == "input"):
-        parsed += f"Input(ac=0, args=["
+      curkw = body[pos].get("value")
+      curac = body[pos].get("ac")
+      if (curkw == "println"):
+        parsed += f"PrintLn(ac={curac}, args=["
+      elif (curkw == "add"):
+        parsed += f"Add(ac={curac}, args=["
+      elif (curkw == "sub"):
+        parsed += f"Sub(ac={curac}, args=["
+      elif (curkw == "mul"):
+        parsed += f"Mul(ac={curac}, args=["
+      elif (curkw == "div"):
+        parsed += f"Div(ac={curac}, args=["
+      elif (curkw == "toInt"):
+        parsed += f"ToInt(ac={curac}, args=["
+      elif (curkw == "toFloat"):
+        parsed += f"ToFloat(ac={curac}, args=["
+      elif (curkw == "let"):
+        parsed += f"Let(ac={curac}, args=["
+      elif (curkw == "val"):
+        parsed += f"Val(ac={curac}, args=["
+      elif (curkw == "input"):
+        parsed += f"Input(ac={curac}, args=["
+      elif (curkw == "array"):
+        parsed += f"Array(ac={curac}, args=["
+      elif (curkw == "elem"):
+        parsed += f"Elem(ac={curac}, args=["
+      elif (curkw == "set"):
+        parsed += f"SetElem(ac={curac}, args=["
 
       pos += 2
       opened += 1

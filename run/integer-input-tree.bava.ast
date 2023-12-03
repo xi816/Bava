@@ -1,0 +1,2 @@
+Let(ac=2, args=[Ident(name="x"), ToInt(ac=1, args=[Input(ac=0, args=[])])])
+PrintLn(ac=-1, args=[String(value="You typed: "), Val(ac=1, args=[Ident(name="x")])])

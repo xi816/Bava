@@ -1,0 +1,4 @@
+Let(ac=2, args=[Ident(name="arr1"), Array(ac=-1, args=[Int(value=1), Int(value=4), Int(value=9), Int(value=16), Int(value=25), Int(value=36)])])
+PrintLn(ac=-1, args=[Val(ac=1, args=[Ident(name="arr1")])])
+SetElem(ac=-1, args=[Ident(name="arr1"), Int(value=6), Int(value=1)])
+PrintLn(ac=-1, args=[Val(ac=1, args=[Ident(name="arr1")])])
